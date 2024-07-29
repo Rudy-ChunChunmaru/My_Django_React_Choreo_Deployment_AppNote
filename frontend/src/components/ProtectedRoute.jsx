@@ -19,20 +19,26 @@ function ProtectedRoute({ children }) {
 
   const refreshToken = async () => {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN);
-    try {
-      const res = await api.post("/api/token/refresh/", {
-        refresh: refreshToken,
-      });
-
-      if (res.status == 200) {
-        localStorage.setItem(ACCESS_TOKEN, res.data.access);
-        setIsAuthorized(true);
-      } else {
+    if (refreshToken) {
+      try {
+        await api
+          .post("/api/token/refresh/", {
+            refresh: refreshToken,
+          })
+          .then((res) => {
+            if (res.status == 200) {
+              localStorage.setItem(ACCESS_TOKEN, res.data.access);
+              setIsAuthorized(true);
+            } else {
+              localStorage.clear();
+              setIsAuthorized(false);
+            }
+          });
+      } catch (error) {
+        // console.error(error);
+        localStorage.clear();
         setIsAuthorized(false);
       }
-    } catch (error) {
-      // console.error(error);
-      setIsAuthorized(false);
     }
   };
 

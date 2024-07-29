@@ -13,7 +13,7 @@ function From({ route, method }) {
   //
 
   const handleSubmit = async (e) => {
-    console.info(method);
+    // console.info(method);
     setLoading(true);
 
     e.preventDefault();
@@ -26,7 +26,7 @@ function From({ route, method }) {
 
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
         // console.info(res.data.refresh);
-        navigate("/");
+        navigate("/home");
       } else {
         navigate("/login");
       }
@@ -34,7 +34,7 @@ function From({ route, method }) {
       if (error.response.status === 401) {
         alert(error.response.data.detail);
       }
-      console.info(error);
+      // console.info(error);
     } finally {
       setLoading(false);
     }
