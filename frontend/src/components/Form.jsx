@@ -26,7 +26,7 @@ function From({ route, method }) {
 
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
         // console.info(res.data.refresh);
-        navigate("/home");
+        navigate("/");
       } else {
         navigate("/login");
       }
